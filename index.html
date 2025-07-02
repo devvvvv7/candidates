@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanmati School Election 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <style>
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+        }
+        .glow { animation: glow 2s infinite; }
+        .bg-gradient { background: linear-gradient(135deg, #3b82f6, #8b5cf6); }
+        .hover-scale:hover { transform: scale(1.05); transition: transform 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <!-- Header -->
+        <header class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-white bg-gradient p-4 rounded-lg glow">Sanmati Higher Secondary School Election 2025</h1>
+        </header>
+
+        <!-- Login Section -->
+        <div id="login-section" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md glow">
+            <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Student Login</h2>
+            <input id="email" type="email" placeholder="Email" class="w-full p-2 mb-4 border rounded">
+            <input id="password" type="password" placeholder="Password" class="w-full p-2 mb-4 border rounded">
+            <button id="login-btn" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 hover-scale">Login</button>
+            <p id="error-message" class="text-red-500 text-center mt-2"></p>
+        </div>
+
+        <!-- Voting Section -->
+        <div id="voting-section" class="hidden max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6 glow">
+            <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Cast Your Vote</h2>
+            <!-- Student Details -->
+            <div class="mb-4">
+                <input id="student-name" type="text" placeholder="Full Name" class="w-full p-2 mb-2 border rounded">
+                <select id="student-class" class="w-full p-2 mb-2 border rounded">
+                    <option value="">Select Class</option>
+                    <option value="6">6th</option>
+                    <option value="7">7th</option>
+                    <option value="8">8th</option>
+                    <option value="9">9th</option>
+                    <option value="10">10th</option>
+                    <option value="11">11th</option>
+                    <option value="12">12th</option>
+                </select>
+                <select id="student-section" class="w-full p-2 mb-2 border rounded">
+                    <option value="">Select Section</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+                <input id="scholar-number" type="text" placeholder="Scholar Number" class="w-full p-2 mb-2 border rounded">
+            </div>
+            <!-- Candidates Dropdown -->
+            <div id="candidates-list" class="grid grid-cols-1 gap-4 mb-4"></div>
+            <button id="submit-vote" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 hover-scale">Submit Vote</button>
+            <p id="vote-message" class="text-center mt-2"></p>
+            <a id="results-link" href="results.html" class="hidden text-center mt-4 text-blue-500 hover:underline">View Election Results (Admin Only)</a>
+            <button id="logout-btn" class="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 hover-scale mt-4">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration (Replace with your Firebase project config)
+        const firebaseConfig = {
+  apiKey: "AIzaSyBLN3ENTtU1clKiY3ayKym4p2hFCsSw1ts",
+  authDomain: "school-voting-492f0.firebaseapp.com",
+  projectId: "school-voting-492f0",
+  storageBucket: "school-voting-492f0.firebasestorage.app",
+  messagingSenderId: "1067824236088",
+  appId: "1:1067824236088:web:867393ecd32b0708bec8cd",
+  measurementId: "G-F8J7CRVNPE"
+};
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // DOM Elements
+        const loginSection = document.getElementById('login-section');
+        const votingSection = document.getElementById('voting-section');
+        const candidatesList = document.getElementById('candidates-list');
+        const submitVoteBtn = document.getElementById('submit-vote');
+        const voteMessage = document.getElementById('vote-message');
+        const resultsLink = document.getElementById('results-link');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const errorMessage = document.getElementById('error-message');
+        const studentName = document.getElementById('student-name');
+        const studentClass = document.getElementById('student-class');
+        const studentSection = document.getElementById('student-section');
+        const scholarNumber = document.getElementById('scholar-number');
+
+        // Sample Candidates (Replace with Firestore data)
+        const candidates = [
+            { id: '1', name: 'John Doe', position: 'President', image: 'https://via.placeholder.com/50' },
+            { id: '2', name: 'Jane Smith', position: 'President', image: 'https://via.placeholder.com/50' },
+            { id: '3', name: 'Alex Johnson', position: 'Vice President', image: 'https://via.placeholder.com/50' },
+            { id: '4', name: 'Emily Brown', position: 'Vice President', image: 'https://via.placeholder.com/50' }
+        ];
+
+        // Check Auth State
+        auth.onAuthStateChanged(async user => {
+            if (user) {
+                loginSection.classList.add('hidden');
+                votingSection.classList.remove('hidden');
+                loadCandidates();
+                checkIfVoted(user.uid);
+                checkResultsVisibility(user);
+            } else {
+                loginSection.classList.remove('hidden');
+                votingSection.classList.add('hidden');
+            }
+        });
+
+        // Login
+        loginBtn.addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            auth.signInWithEmailAndPassword(email, password)
+                .catch(error => {
+                    errorMessage.textContent = error.message;
+                });
+        });
+
+        // Check Results Link Visibility
+        async function checkResultsVisibility(user) {
+            try {
+                const configDoc = await db.collection('config').doc('election').get();
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (configDoc.exists && configDoc.data().showResults === true && userDoc.exists && userDoc.data().role === 'admin') {
+                    resultsLink.classList.remove('hidden');
+                } else {
+                    resultsLink.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error checking results visibility:', error);
+            }
+        }
+
+        // Load Candidates
+        async function loadCandidates() {
+            candidatesList.innerHTML = '';
+            try {
+                const candidateSnapshot = await db.collection('candidates').get();
+                const positions = {};
+                candidateSnapshot.forEach(doc => {
+                    const candidate = { id: doc.id, ...doc.data() };
+                    if (!positions[candidate.position]) {
+                        positions[candidate.position] = [];
+                    }
+                    positions[candidate.position].push(candidate);
+                });
+
+                for (const position in positions) {
+                    const select = document.createElement('select');
+                    select.name = `candidate-${position}`;
+                    select.className = 'w-full p-2 mb-2 border rounded hover-scale';
+                    select.innerHTML = `<option value="">Select ${position}</option>`;
+                    positions[position].forEach(candidate => {
+                        select.innerHTML += `
+                            <option value="${candidate.id}">
+                                ${candidate.name}
+                            </option>
+                        `;
+                    });
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center p-2 border rounded hover-scale';
+                    div.innerHTML = `<img src="${positions[position][0].image || 'https://via.placeholder.com/50'}" alt="Candidate" class="w-12 h-12 mr-2 rounded-full">`;
+                    div.appendChild(select);
+                    candidatesList.appendChild(div);
+                }
+            } catch (error) {
+                voteMessage.textContent = 'Error loading candidates: ' + error.message;
+            }
+        }
+
+        // Check if user has voted
+        async function checkIfVoted(userId) {
+            const voteDoc = await db.collection('votes').doc(userId).get();
+            if (voteDoc.exists) {
+                voteMessage.textContent = 'You have already voted!';
+                submitVoteBtn.disabled = true;
+            } else {
+                submitVoteBtn.disabled = false;
+            }
+        }
+
+        // Submit Vote
+        submitVoteBtn.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const name = studentName.value.trim();
+            const classGrade = studentClass.value;
+            const section = studentSection.value;
+            const scholar = scholarNumber.value.trim();
+
+            if (!name || !classGrade || !section || !scholar) {
+                voteMessage.textContent = 'Please fill in all student details!';
+                return;
+            }
+
+            const selectedCandidates = {};
+            document.querySelectorAll('select').forEach(select => {
+                if (select.value) {
+                    selectedCandidates[select.name] = select.value;
+                }
+            });
+
+            if (Object.keys(selectedCandidates).length === 0) {
+                voteMessage.textContent = 'Please select at least one candidate!';
+                return;
+            }
+
+            try {
+                await db.collection('votes').doc(user.uid).set({
+                    userId: user.uid,
+                    name: name,
+                    class: classGrade,
+                    section: section,
+                    scholarNumber: scholar,
+                    votes: selectedCandidates,
+                    classSection: `${classGrade}${section}`,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                voteMessage.textContent = 'Vote submitted successfully!';
+                submitVoteBtn.disabled = true;
+            } cardiv = document.createElement('div');
+                div.className = 'p-2 border-b';
+                div.textContent = `${classSection}: ${counts[classSection] || 0} votes`;
+                resultsDiv.appendChild(div);
+            });
+
+            // Display total votes
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'p-2 border-t font-bold';
+            totalDiv.textContent = `Total Votes: ${totalVotes}`;
+            resultsDiv.appendChild(totalDiv);
+        }
+
+        // Logout
+        logoutBtn.addEventListener('click', () => auth.signOut());
+    </script>
+</body>
+</html>
