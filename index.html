@@ -30,17 +30,8 @@
 </head>
 <body class="min-h-screen">
     <div class="container mx-auto p-4">
-        <!-- Login Section -->
-        <div id="login-section" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md glow">
-            <h2 class="text-2xl font-bold mb-4 text-center text-blue-900">Sanmati School Election Login</h2>
-            <input id="email" type="email" placeholder="Email" class="w-full p-2 mb-4 border rounded">
-            <input id="password" type="password" placeholder="Password" class="w-full p-2 mb-4 border rounded">
-            <button id="login-btn" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition">Login</button>
-            <p id="error-message" class="text-red-500 text-center mt-2"></p>
-        </div>
-
         <!-- Voting Section -->
-        <div id="voting-section" class="hidden max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6 glow">
+        <div id="voting-section" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md glow">
             <h2 class="text-2xl font-bold mb-4 text-center text-blue-900">Sanmati School Election 2025</h2>
             <!-- Student Details -->
             <div class="mb-6">
@@ -70,42 +61,34 @@
             <button id="submit-vote" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-4 transition">Submit Vote</button>
             <p id="vote-message" class="text-center mt-2"></p>
             <a id="results-link" href="results.html" class="hidden text-center mt-4 text-blue-500 hover:underline">View Election Results (Admin Only)</a>
-            <button id="logout-btn" class="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 mt-4 transition">Logout</button>
         </div>
     </div>
 
     <script type="module">
         // Import Firebase SDK
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
         import { getFirestore, collection, doc, getDoc, getDocs, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
         // Firebase Configuration (Replace with your Firebase project config)
         const firebaseConfig = {
-  apiKey: "AIzaSyBLN3ENTtU1clKiY3ayKym4p2hFCsSw1ts",
-  authDomain: "school-voting-492f0.firebaseapp.com",
-  projectId: "school-voting-492f0",
-  storageBucket: "school-voting-492f0.firebasestorage.app",
-  messagingSenderId: "1067824236088",
-  appId: "1:1067824236088:web:867393ecd32b0708bec8cd",
-  measurementId: "G-F8J7CRVNPE"
-};
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getFirestore(app);
 
         // DOM Elements
-        const loginSection = document.getElementById('login-section');
         const votingSection = document.getElementById('voting-section');
         const candidatesList = document.getElementById('candidates-list');
         const submitVoteBtn = document.getElementById('submit-vote');
         const voteMessage = document.getElementById('vote-message');
         const resultsLink = document.getElementById('results-link');
-        const loginBtn = document.getElementById('login-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const errorMessage = document.getElementById('error-message');
         const studentName = document.getElementById('student-name');
         const studentClass = document.getElementById('student-class');
         const studentSection = document.getElementById('student-section');
@@ -118,46 +101,6 @@
             { id: '3', name: 'Alex Johnson', position: 'Vice President' },
             { id: '4', name: 'Emily Brown', position: 'Vice President' }
         ];
-
-        // Check Auth State
-        onAuthStateChanged(auth, async user => {
-            if (user) {
-                loginSection.classList.add('hidden');
-                votingSection.classList.remove('hidden');
-                await loadCandidates();
-                await checkIfVoted(user.uid);
-                await checkResultsVisibility(user);
-            } else {
-                loginSection.classList.remove('hidden');
-                votingSection.classList.add('hidden');
-            }
-        });
-
-        // Login
-        loginBtn.addEventListener('click', async () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                errorMessage.textContent = error.message;
-            }
-        });
-
-        // Check Results Link Visibility
-        async function checkResultsVisibility(user) {
-            try {
-                const configDoc = await getDoc(doc(db, 'config', 'election'));
-                const userDoc = await getDoc(doc(db, 'users', user.uid));
-                if (configDoc.exists() && configDoc.data().showResults === true && userDoc.exists() && userDoc.data().role === 'admin') {
-                    resultsLink.classList.remove('hidden');
-                } else {
-                    resultsLink.classList.add('hidden');
-                }
-            } catch (error) {
-                console.error('Error checking results visibility:', error);
-            }
-        }
 
         // Load Candidates
         async function loadCandidates() {
@@ -191,12 +134,18 @@
             }
         }
 
-        // Check if user has voted
-        async function checkIfVoted(userId) {
+        // Check if scholar number has voted
+        async function checkIfVoted(scholar) {
             try {
-                const voteDoc = await getDoc(doc(db, 'votes', userId));
-                if (voteDoc.exists()) {
-                    voteMessage.textContent = 'You have already voted!';
+                const voteQuery = await getDocs(collection(db, 'votes'));
+                let hasVoted = false;
+                voteQuery.forEach(doc => {
+                    if (doc.data().scholarNumber === scholar) {
+                        hasVoted = true;
+                    }
+                });
+                if (hasVoted) {
+                    voteMessage.textContent = 'This scholar number has already voted!';
                     submitVoteBtn.disabled = true;
                 } else {
                     submitVoteBtn.disabled = false;
@@ -206,11 +155,27 @@
             }
         }
 
+        // Check Results Link Visibility (Admin-Only)
+        async function checkResultsVisibility() {
+            try {
+                const configDoc = await getDoc(doc(db, 'config', 'election'));
+                if (configDoc.exists() && configDoc.data().showResults === true) {
+                    resultsLink.classList.remove('hidden');
+                } else {
+                    resultsLink.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error checking results visibility:', error);
+                resultsLink.classList.add('hidden'); // Hide link on error
+            }
+        }
+
+        // Initialize
+        loadCandidates();
+        checkResultsVisibility();
+
         // Submit Vote
         submitVoteBtn.addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (!user) return;
-
             const name = studentName.value.trim();
             const classGrade = studentClass.value;
             const section = studentSection.value;
@@ -220,6 +185,10 @@
                 voteMessage.textContent = 'Please fill in all student details!';
                 return;
             }
+
+            // Check if scholar number has already voted
+            await checkIfVoted(scholar);
+            if (submitVoteBtn.disabled) return;
 
             const selectedCandidates = {};
             document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
@@ -233,8 +202,7 @@
 
             try {
                 const classSection = `${classGrade}_${section}`;
-                await setDoc(doc(db, 'votes', user.uid), {
-                    userId: user.uid,
+                await setDoc(doc(db, 'votes', scholar), {
                     studentName: name,
                     class: classGrade,
                     section: section,
@@ -247,15 +215,6 @@
                 submitVoteBtn.disabled = true;
             } catch (error) {
                 voteMessage.textContent = 'Error submitting vote: ' + error.message;
-            }
-        });
-
-        // Logout
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error('Error signing out:', error);
             }
         });
     </script>
