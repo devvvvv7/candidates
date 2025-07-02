@@ -158,7 +158,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
     <header class="header-container text-center mb-12">
-        <img src="https://via.placeholder.com/200x100?text=Sanmati+Higher+Secondary+School+Logo" alt="Sanmati Higher Secondary School Logo" class="mx-auto mb-4" style="max-width: 200px; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+        <img src="https://placehold.co/200x100?text=Sanmati+School+Logo" alt="Sanmati Higher Secondary School Logo" class="mx-auto mb-4" style="max-width: 200px; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
         <h1 class="text-5xl font-extrabold text-white animate-pulse">Sanmati School Election 2025 - Group 2</h1>
         <p class="text-2xl text-yellow-300 mt-4 slogan">Shape Tomorrow, Vote Today!</p>
     </header>
@@ -166,27 +166,27 @@
         <h2 class="text-3xl font-bold text-center text-white mb-6">Meet Your Candidates</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="images/candidate6.jpg" alt="Candidate 6" class="candidate-img mx-auto">
+                <img src="https://placehold.co/100x100?text=Candidate6" alt="Candidate 6" class="candidate-img mx-auto">
                 <h3 class="text-lg font-semibold mt-2 text-white">Candidate 6</h3>
                 <p class="text-sm text-gray-200 mt-1">Innovative leader with creative ideas.</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="images/candidate7.jpg" alt="Candidate 7" class="candidate-img mx-auto">
+                <img src="https://placehold.co/100x100?text=Candidate7" alt="Candidate 7" class="candidate-img mx-auto">
                 <h3 class="text-lg font-semibold mt-2 text-white">Candidate 7</h3>
                 <p class="text-sm text-gray-200 mt-1">Passionate about student welfare.</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="images/candidate8.jpg" alt="Candidate 8" class="candidate-img mx-auto">
+                <img src="https://placehold.co/100x100?text=Candidate8" alt="Candidate 8" class="candidate-img mx-auto">
                 <h3 class="text-lg font-semibold mt-2 text-white">Candidate 8</h3>
                 <p class="text-sm text-gray-200 mt-1">Dedicated to sports excellence.</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="images/candidate9.jpg" alt="Candidate 9" class="candidate-img mx-auto">
+                <img src="https://placehold.co/100x100?text=Candidate9" alt="Candidate 9" class="candidate-img mx-auto">
                 <h3 class="text-lg font-semibold mt-2 text-white">Candidate 9</h3>
                 <p class="text-sm text-gray-200 mt-1">Focused on academic growth.</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="images/candidate10.jpg" alt="Candidate 10" class="candidate-img mx-auto">
+                <img src="https://placehold.co/100x100?text=Candidate10" alt="Candidate 10" class="candidate-img mx-auto">
                 <h3 class="text-lg font-semibold mt-2 text-white">Candidate 10</h3>
                 <p class="text-sm text-gray-200 mt-1">Advocate for environmental action.</p>
             </div>
@@ -204,7 +204,7 @@
             </div>
             <div>
                 <label for="class" class="block text-gray-200 font-medium">Class</label>
-                <select id="class" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/80" onchange="updatePosts()">
+                <select id="class" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/80">
                     <option value="">--Choose Class--</option>
                     <option value="12">12</option>
                     <option value="11">11</option>
@@ -213,7 +213,7 @@
             </div>
             <div id="sectionDiv" style="display: none;">
                 <label for="section" class="block text-gray-200 font-medium">Section</label>
-                <select id="section" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/60" onchange="updatePosts()">
+                <select id="section" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/80">
                     <option value="">--Choose Section--</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -280,12 +280,11 @@
         ];
 
         const candidates = [
-            { name: "Candidate 6", image: "images/candidate6.jpg" },
-            { name: "Candidate 7", image: "images/candidate7.jpg" },
-            { name: "Candidate 8", image: "images/candidate8.jpg" },
-near the dropdown when a candidate is selected
-            { name: "Candidate 9", image: "images/candidate9.jpg" },
-            { name: "Candidate 10", image: "images/candidate10.jpg" }
+            { name: "Candidate 6", image: "https://placehold.co/100x100?text=Candidate6" },
+            { name: "Candidate 7", image: "https://placehold.co/100x100?text=Candidate7" },
+            { name: "Candidate 8", image: "https://placehold.co/100x100?text=Candidate8" },
+            { name: "Candidate 9", image: "https://placehold.co/100x100?text=Candidate9" },
+            { name: "Candidate 10", image: "https://placehold.co/100x100?text=Candidate10" }
         ];
 
         let currentStep = 0;
@@ -296,6 +295,7 @@ near the dropdown when a candidate is selected
         const progressBar = document.getElementById('progress-bar');
 
         function updatePosts() {
+            console.log('updatePosts called');
             const classValue = document.getElementById('class').value;
             const sectionDiv = document.getElementById('sectionDiv');
             votingPostsDiv.innerHTML = '';
@@ -303,7 +303,11 @@ near the dropdown when a candidate is selected
 
             sectionDiv.style.display = classValue ? 'block' : 'none';
             const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
-            if (filteredPosts.length === 0) return;
+            console.log('Filtered Posts:', filteredPosts, 'Class:', classValue);
+            if (filteredPosts.length === 0) {
+                votingPostsDiv.innerHTML = '<p class="text-red-300">Please select a valid class to continue.</p>';
+                return;
+            }
 
             renderPost(filteredPosts[0]);
             updateProgress(filteredPosts);
@@ -313,6 +317,7 @@ near the dropdown when a candidate is selected
         }
 
         function renderPost(post) {
+            console.log('Rendering post:', post);
             votingPostsDiv.innerHTML = `
                 <div class="mb-4">
                     <label for="${post.id}" class="block text-gray-200 font-medium">${post.label} <span class="tooltip" title="${post.tooltip}">ℹ️</span></label>
@@ -327,17 +332,21 @@ near the dropdown when a candidate is selected
             `;
             updateCandidateOptions();
             const select = document.getElementById(post.id);
-            select.addEventListener('change', () => {
-                const imgUrl = select.options[select.selectedIndex].getAttribute('data-image');
-                const img = select.parentElement.querySelector('.candidate-img-preview');
-                if (imgUrl && select.value) {
-                    img.src = imgUrl;
-                    img.classList.remove('hidden');
-                } else {
-                    img.classList.add('hidden');
-                }
-                updateCandidateOptions();
-            });
+            if (select) {
+                select.addEventListener('change', () => {
+                    const imgUrl = select.options[select.selectedIndex]?.getAttribute('data-image');
+                    const img = select.parentElement.querySelector('.candidate-img-preview');
+                    if (imgUrl && select.value) {
+                        img.src = imgUrl;
+                        img.classList.remove('hidden');
+                    } else {
+                        img.classList.add('hidden');
+                    }
+                    updateCandidateOptions();
+                });
+            } else {
+                console.error('Select element not found for post:', post.id);
+            }
         }
 
         function updateCandidateOptions() {
@@ -364,24 +373,25 @@ near the dropdown when a candidate is selected
             progressBar.style.width = `${progress}%`;
         }
 
-        prevBtn.addEventListener('click', () => {
-            const classValue = document.getElementById('class').value;
-            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
-            currentStep--;
-            renderPost(filteredPosts[currentStep]);
-            updateProgress(filteredPosts);
-            nextBtn.classList.remove('hidden');
-            submitBtn.classList.add('hidden');
-            if (currentStep === 0) {
-                prevBtn.classList.add('hidden');
-            }
-        });
-
         nextBtn.addEventListener('click', () => {
+            console.log('Next button clicked, currentStep:', currentStep);
             const classValue = document.getElementById('class').value;
+            if (!classValue) {
+                alert('Please select a class before proceeding.');
+                return;
+            }
             const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
+            if (filteredPosts.length === 0) {
+                alert('No posts available for the selected class.');
+                return;
+            }
             const currentPost = filteredPosts[currentStep];
             const select = document.getElementById(currentPost.id);
+            if (!select) {
+                console.error('Select element not found for post:', currentPost.id);
+                alert('An error occurred. Please try again.');
+                return;
+            }
             if (!select.value) {
                 alert('Please select a candidate for this position.');
                 return;
@@ -399,7 +409,22 @@ near the dropdown when a candidate is selected
             }
         });
 
+        prevBtn.addEventListener('click', () => {
+            console.log('Previous button clicked, currentStep:', currentStep);
+            const classValue = document.getElementById('class').value;
+            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
+            currentStep--;
+            renderPost(filteredPosts[currentStep]);
+            updateProgress(filteredPosts);
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+            if (currentStep === 0) {
+                prevBtn.classList.add('hidden');
+            }
+        });
+
         function showSummary(filteredPosts) {
+            console.log('Showing summary for posts:', filteredPosts);
             votingPostsDiv.innerHTML = `
                 <div class="modal-content">
                     <h3 class="text-2xl font-bold mb-4">Review Your Votes</h3>
@@ -416,6 +441,7 @@ near the dropdown when a candidate is selected
         }
 
         window.goBack = function() {
+            console.log('Go back called, currentStep:', currentStep);
             const classValue = document.getElementById('class').value;
             const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
             currentStep--;
@@ -429,6 +455,7 @@ near the dropdown when a candidate is selected
         };
 
         window.submitForm = function() {
+            console.log('Submit form called');
             document.getElementById('voteForm').dispatchEvent(new Event('submit'));
         };
 
@@ -448,6 +475,7 @@ near the dropdown when a candidate is selected
 
         document.getElementById('voteForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            console.log('Form submitted');
             const name = document.getElementById('name').value;
             const classVal = document.getElementById('class').value;
             const section = document.getElementById('section').value || 'N/A';
