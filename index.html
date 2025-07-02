@@ -166,30 +166,31 @@
         <h2 class="text-3xl font-bold text-center text-white mb-6">Meet Your Candidates</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="https://placehold.co/100x100?text=Candidate6" alt="Candidate 6" class="candidate-img mx-auto">
-                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 6</h3>
-                <p class="text-sm text-gray-200 mt-1">Innovative leader with creative ideas.</p>
+                <img src="https://placehold.co/100x100?text=Candidate1" alt="Candidate 1" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 1</h3>
+                <p class="text-sm text-gray-200 mt-1">Running for School President</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="https://placehold.co/100x100?text=Candidate7" alt="Candidate 7" class="candidate-img mx-auto">
-                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 7</h3>
-                <p class="text-sm text-gray-200 mt-1">Passionate about student welfare.</p>
+                <img src="https://placehold.co/100x100?text=Candidate2" alt="Candidate 2" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 2</h3>
+                <p class="text-sm text-gray-200 mt-1">Running for School President</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="https://placehold.co/100x100?text=Candidate8" alt="Candidate 8" class="candidate-img mx-auto">
-                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 8</h3>
-                <p class="text-sm text-gray-200 mt-1">Dedicated to sports excellence.</p>
+                <img src="https://placehold.co/100x100?text=Candidate3" alt="Candidate 3" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 3</h3>
+                <p class="text-sm text-gray-200 mt-1">Running for Vice President</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="https://placehold.co/100x100?text=Candidate9" alt="Candidate 9" class="candidate-img mx-auto">
-                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 9</h3>
-                <p class="text-sm text-gray-200 mt-1">Focused on academic growth.</p>
+                <img src="https://placehold.co/100x100?text=Candidate4" alt="Candidate 4" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 4</h3>
+                <p class="text-sm text-gray-200 mt-1">Running for Vice President</p>
             </div>
             <div class="candidate-intro text-center p-2 rounded-lg">
-                <img src="https://placehold.co/100x100?text=Candidate10" alt="Candidate 10" class="candidate-img mx-auto">
-                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 10</h3>
-                <p class="text-sm text-gray-200 mt-1">Advocate for environmental action.</p>
+                <img src="https://placehold.co/100x100?text=Candidate5" alt="Candidate 5" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 5</h3>
+                <p class="text-sm text-gray-200 mt-1">Running for Prime Minister</p>
             </div>
+            <!-- Add more candidates as needed for other positions -->
         </div>
     </section>
     <section class="w-full max-w-4xl mt-12 bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6 border border-white/20">
@@ -242,7 +243,7 @@
         import { initializeApp, deleteApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, getDocs, query, where, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-         const firebaseConfig = {
+        const firebaseConfig = {
   apiKey: "AIzaSyBLN3ENTtU1clKiY3ayKym4p2hFCsSw1ts",
   authDomain: "school-voting-492f0.firebaseapp.com",
   projectId: "school-voting-492f0",
@@ -260,31 +261,163 @@
         const db = getFirestore(app);
 
         const posts = [
-            { id: "post1", label: "School President", tooltip: "Leads the student council and represents the school." },
-            { id: "post2", label: "Vice President", tooltip: "Assists the president and leads in their absence." },
-            { id: "post3", label: "Prime Minister", tooltip: "Oversees major school initiatives." },
-            { id: "post4", label: "Deputy P.M.", tooltip: "Supports the Prime Minister." },
-            { id: "post5", label: "Discipline Advisor", tooltip: "Promotes discipline and school rules." },
-            { id: "post6", label: "Speaker", tooltip: "Represents student voices in assemblies." },
-            { id: "post7", label: "House Captain Class 10 (1 per House)", tooltip: "Leads Class 10 house activities.", classSpecific: "9-10" },
-            { id: "post8", label: "Vice-Captain Class 9 (1 per House)", tooltip: "Supports Class 9 house leadership.", classSpecific: "9-10" },
-            { id: "post9", label: "Sports Captain Class 9 (1 per House)", tooltip: "Leads Class 9 sports activities.", classSpecific: "9-10" },
-            { id: "post10", label: "Class Representative Class 10 (4 Positions)", tooltip: "Represents Class 10 students.", classSpecific: "9-10" },
-            { id: "post11", label: "Cultural Advisor", tooltip: "Promotes cultural events." },
-            { id: "post12", label: "Cultural Minister", tooltip: "Organizes cultural programs." },
-            { id: "post13", label: "Technological Advisor", tooltip: "Guides tech-related initiatives." },
-            { id: "post14", label: "Technological Minister", tooltip: "Implements tech solutions." },
-            { id: "post15", label: "Academic Minister", tooltip: "Focuses on academic excellence." },
-            { id: "post16", label: "Chairmen of House", tooltip: "Oversees house activities." },
-            { id: "post17", label: "Environment Minister", tooltip: "Promotes environmental initiatives." }
-        ];
-
-        const candidates = [
-            { name: "Candidate 6", image: "https://placehold.co/100x100?text=Candidate6" },
-            { name: "Candidate 7", image: "https://placehold.co/100x100?text=Candidate7" },
-            { name: "Candidate 8", image: "https://placehold.co/100x100?text=Candidate8" },
-            { name: "Candidate 9", image: "https://placehold.co/100x100?text=Candidate9" },
-            { name: "Candidate 10", image: "https://placehold.co/100x100?text=Candidate10" }
+            {
+                id: "post1",
+                label: "School President",
+                tooltip: "Leads the student council and represents the school.",
+                candidates: [
+                    { name: "Candidate 1", image: "https://placehold.co/100x100?text=Candidate1" },
+                    { name: "Candidate 2", image: "https://placehold.co/100x100?text=Candidate2" }
+                ]
+            },
+            {
+                id: "post2",
+                label: "Vice President",
+                tooltip: "Assists the president and leads in their absence.",
+                candidates: [
+                    { name: "Candidate 3", image: "https://placehold.co/100x100?text=Candidate3" },
+                    { name: "Candidate 4", image: "https://placehold.co/100x100?text=Candidate4" }
+                ]
+            },
+            {
+                id: "post3",
+                label: "Prime Minister",
+                tooltip: "Oversees major school initiatives.",
+                candidates: [
+                    { name: "Candidate 5", image: "https://placehold.co/100x100?text=Candidate5" },
+                    { name: "Candidate 6", image: "https://placehold.co/100x100?text=Candidate6" }
+                ]
+            },
+            {
+                id: "post4",
+                label: "Deputy P.M.",
+                tooltip: "Supports the Prime Minister.",
+                candidates: [
+                    { name: "Candidate 7", image: "https://placehold.co/100x100?text=Candidate7" },
+                    { name: "Candidate 8", image: "https://placehold.co/100x100?text=Candidate8" }
+                ]
+            },
+            {
+                id: "post5",
+                label: "Discipline Advisor",
+                tooltip: "Promotes discipline and school rules.",
+                candidates: [
+                    { name: "Candidate 9", image: "https://placehold.co/100x100?text=Candidate9" },
+                    { name: "Candidate 10", image: "https://placehold.co/100x100?text=Candidate10" }
+                ]
+            },
+            {
+                id: "post6",
+                label: "Speaker",
+                tooltip: "Represents student voices in assemblies.",
+                candidates: [
+                    { name: "Candidate 11", image: "https://placehold.co/100x100?text=Candidate11" },
+                    { name: "Candidate 12", image: "https://placehold.co/100x100?text=Candidate12" }
+                ]
+            },
+            {
+                id: "post7",
+                label: "House Captain Class 10 (1 per House)",
+                tooltip: "Leads Class 10 house activities.",
+                classSpecific: "9-10",
+                candidates: [
+                    { name: "Candidate 13", image: "https://placehold.co/100x100?text=Candidate13" },
+                    { name: "Candidate 14", image: "https://placehold.co/100x100?text=Candidate14" }
+                ]
+            },
+            {
+                id: "post8",
+                label: "Vice-Captain Class 9 (1 per House)",
+                tooltip: "Supports Class 9 house leadership.",
+                classSpecific: "9-10",
+                candidates: [
+                    { name: "Candidate 15", image: "https://placehold.co/100x100?text=Candidate15" },
+                    { name: "Candidate 16", image: "https://placehold.co/100x100?text=Candidate16" }
+                ]
+            },
+            {
+                id: "post9",
+                label: "Sports Captain Class 9 (1 per House)",
+                tooltip: "Leads Class 9 sports activities.",
+                classSpecific: "9-10",
+                candidates: [
+                    { name: "Candidate 17", image: "https://placehold.co/100x100?text=Candidate17" },
+                    { name: "Candidate 18", image: "https://placehold.co/100x100?text=Candidate18" }
+                ]
+            },
+            {
+                id: "post10",
+                label: "Class Representative Class 10 (4 Positions)",
+                tooltip: "Represents Class 10 students.",
+                classSpecific: "9-10",
+                candidates: [
+                    { name: "Candidate 19", image: "https://placehold.co/100x100?text=Candidate19" },
+                    { name: "Candidate 20", image: "https://placehold.co/100x100?text=Candidate20" }
+                ]
+            },
+            {
+                id: "post11",
+                label: "Cultural Advisor",
+                tooltip: "Promotes cultural events.",
+                candidates: [
+                    { name: "Candidate 21", image: "https://placehold.co/100x100?text=Candidate21" },
+                    { name: "Candidate 22", image: "https://placehold.co/100x100?text=Candidate22" }
+                ]
+            },
+            {
+                id: "post12",
+                label: "Cultural Minister",
+                tooltip: "Organizes cultural programs.",
+                candidates: [
+                    { name: "Candidate 23", image: "https://placehold.co/100x100?text=Candidate23" },
+                    { name: "Candidate 24", image: "https://placehold.co/100x100?text=Candidate24" }
+                ]
+            },
+            {
+                id: "post13",
+                label: "Technological Advisor",
+                tooltip: "Guides tech-related initiatives.",
+                candidates: [
+                    { name: "Candidate 25", image: "https://placehold.co/100x100?text=Candidate25" },
+                    { name: "Candidate 26", image: "https://placehold.co/100x100?text=Candidate26" }
+                ]
+            },
+            {
+                id: "post14",
+                label: "Technological Minister",
+                tooltip: "Implements tech solutions.",
+                candidates: [
+                    { name: "Candidate 27", image: "https://placehold.co/100x100?text=Candidate27" },
+                    { name: "Candidate 28", image: "https://placehold.co/100x100?text=Candidate28" }
+                ]
+            },
+            {
+                id: "post15",
+                label: "Academic Minister",
+                tooltip: "Focuses on academic excellence.",
+                candidates: [
+                    { name: "Candidate 29", image: "https://placehold.co/100x100?text=Candidate29" },
+                    { name: "Candidate 30", image: "https://placehold.co/100x100?text=Candidate30" }
+                ]
+            },
+            {
+                id: "post16",
+                label: "Chairmen of House",
+                tooltip: "Oversees house activities.",
+                candidates: [
+                    { name: "Candidate 31", image: "https://placehold.co/100x100?text=Candidate31" },
+                    { name: "Candidate 32", image: "https://placehold.co/100x100?text=Candidate32" }
+                ]
+            },
+            {
+                id: "post17",
+                label: "Environment Minister",
+                tooltip: "Promotes environmental initiatives.",
+                candidates: [
+                    { name: "Candidate 33", image: "https://placehold.co/100x100?text=Candidate33" },
+                    { name: "Candidate 34", image: "https://placehold.co/100x100?text=Candidate34" }
+                ]
+            }
         ];
 
         let currentStep = 0;
@@ -324,7 +457,7 @@
                     <div class="flex items-center space-x-4">
                         <select id="${post.id}" class="custom-select" required>
                             <option value="" disabled selected>--Choose a Candidate--</option>
-                            ${candidates.map(c => `<option value="${c.name}" data-image="${c.image}">${c.name}</option>`).join('')}
+                            ${post.candidates.map(c => `<option value="${c.name}" data-image="${c.image}">${c.name}</option>`).join('')}
                         </select>
                         <img class="candidate-img-preview hidden w-12 h-12 rounded-full border-2 border-white" src="" alt="Candidate">
                     </div>
