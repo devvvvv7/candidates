@@ -3,220 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanmati School Election 2025</title>
+    <title>Sanmati School Election 2025 - Group 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏫</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            animation: gradient 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #f3f4f6;
+            overflow-x: hidden;
         }
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .header-container {
+            animation: fadeInDown 1s ease-out;
         }
-        .card {
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slogan {
+            animation: slideIn 2s ease-in-out infinite alternate;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-15px); }
+            to { transform: translateX(15px); }
+        }
+        .candidate-intro {
+            animation: bounceIn 1s ease-out;
+            background: linear-gradient(135deg, #ffffff10, #ffffff20);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background-clip: padding-box;
+            position: relative;
+        }
+        @keyframes bounceIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .candidate-intro::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            border-radius: 12px;
+            z-index: -1;
+            filter: blur(8px);
+            animation: glow 4s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        .candidate-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        .candidate-img:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.7);
         }
-        .glow {
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        .custom-select {
+            appearance: none;
+            background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%231e3c72' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+            padding: 0.75rem 2rem 0.75rem 1rem;
+            border: 2px solid #4ecdc4;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            background-color: #f9fafb;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(78, 205, 196, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0); }
+        }
+        .custom-select:focus {
+            outline: none;
+            border-color: #45b7d1;
+            box-shadow: 0 0 0 3px rgba(69, 183, 209, 0.5);
+        }
+        .vote-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .vote-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .vote-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        .vote-btn:hover {
+            background: linear-gradient(45deg, #feca57, #ff6b6b);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #4ecdc4;
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            color: #1e3c72;
+        }
+        .tooltip {
+            cursor: help;
+            color: #4ecdc4;
+            margin-left: 5px;
+        }
+        @media (max-width: 640px) {
+            .candidate-intro {
+                padding: 1rem;
+            }
+            .custom-select {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <div class="container mx-auto p-4">
-        <!-- Voting Section -->
-        <div id="voting-section" class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md glow">
-            <h2 class="text-2xl font-bold mb-4 text-center text-blue-900">Sanmati School Election 2025</h2>
-            <!-- Student Details -->
-            <div class="mb-6">
-                <h3 class="text-lg font-semibold mb-2">Enter Your Details</h3>
-                <input id="student-name" type="text" placeholder="Full Name" class="w-full p-2 mb-2 border rounded">
-                <select id="student-class" class="w-full p-2 mb-2 border rounded">
-                    <option value="" disabled selected>Select Class</option>
-                    <option value="6th">6th</option>
-                    <option value="7th">7th</option>
-                    <option value="8th">8th</option>
-                    <option value="9th">9th</option>
-                    <option value="10th">10th</option>
-                    <option value="11th">11th</option>
-                    <option value="12th">12th</option>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <header class="header-container text-center mb-12">
+        <img src="https://via.placeholder.com/200x100?text=Sanmati+Higher+Secondary+School+Logo" alt="Sanmati Higher Secondary School Logo" class="mx-auto mb-4" style="max-width: 200px; border-radius: 10px; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">
+        <h1 class="text-5xl font-extrabold text-white animate-pulse">Sanmati School Election 2025 - Group 2</h1>
+        <p class="text-2xl text-yellow-300 mt-4 slogan">Shape Tomorrow, Vote Today!</p>
+    </header>
+    <section class="w-full max-w-4xl mt-12">
+        <h2 class="text-3xl font-bold text-center text-white mb-6">Meet Your Candidates</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
+            <div class="candidate-intro text-center p-2 rounded-lg">
+                <img src="images/candidate6.jpg" alt="Candidate 6" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 6</h3>
+                <p class="text-sm text-gray-200 mt-1">Innovative leader with creative ideas.</p>
+            </div>
+            <div class="candidate-intro text-center p-2 rounded-lg">
+                <img src="images/candidate7.jpg" alt="Candidate 7" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 7</h3>
+                <p class="text-sm text-gray-200 mt-1">Passionate about student welfare.</p>
+            </div>
+            <div class="candidate-intro text-center p-2 rounded-lg">
+                <img src="images/candidate8.jpg" alt="Candidate 8" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 8</h3>
+                <p class="text-sm text-gray-200 mt-1">Dedicated to sports excellence.</p>
+            </div>
+            <div class="candidate-intro text-center p-2 rounded-lg">
+                <img src="images/candidate9.jpg" alt="Candidate 9" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 9</h3>
+                <p class="text-sm text-gray-200 mt-1">Focused on academic growth.</p>
+            </div>
+            <div class="candidate-intro text-center p-2 rounded-lg">
+                <img src="images/candidate10.jpg" alt="Candidate 10" class="candidate-img mx-auto">
+                <h3 class="text-lg font-semibold mt-2 text-white">Candidate 10</h3>
+                <p class="text-sm text-gray-200 mt-1">Advocate for environmental action.</p>
+            </div>
+        </div>
+    </section>
+    <section class="w-full max-w-4xl mt-12 bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6 border border-white/20">
+        <h2 class="text-3xl font-bold text-center text-white mb-6">Cast Your Vote</h2>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+            <div id="progress-bar" class="progress-bar h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        <form id="voteForm" class="space-y-4">
+            <div>
+                <label for="name" class="block text-gray-200 font-medium">Full Name</label>
+                <input type="text" id="name" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/80">
+            </div>
+            <div>
+                <label for="class" class="block text-gray-200 font-medium">Class</label>
+                <select id="class" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/80" onchange="updatePosts()">
+                    <option value="">--Choose Class--</option>
+                    <option value="12">12</option>
+                    <option value="11">11</option>
+                    <option value="9-10">9 & 10</option>
                 </select>
-                <select id="student-section" class="w-full p-2 mb-2 border rounded">
-                    <option value="" disabled selected>Select Section</option>
+            </div>
+            <div id="sectionDiv" style="display: none;">
+                <label for="section" class="block text-gray-200 font-medium">Section</label>
+                <select id="section" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/60" onchange="updatePosts()">
+                    <option value="">--Choose Section--</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
+                    <option value="D">D</option>
                 </select>
-                <input id="scholar-number" type="text" placeholder="Scholar Number" class="w-full p-2 mb-2 border rounded">
             </div>
-            <!-- Candidates -->
-            <h3 class="text-lg font-semibold mb-2">Select Candidates</h3>
-            <div id="candidates-list" class="grid grid-cols-1 gap-4"></div>
-            <button id="submit-vote" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-4 transition">Submit Vote</button>
-            <p id="vote-message" class="text-center mt-2"></p>
-            <a id="results-link" href="results.html" class="hidden text-center mt-4 text-blue-500 hover:underline">View Election Results (Admin Only)</a>
-        </div>
-    </div>
+            <div>
+                <label for="scholarNo" class="block text-gray-200 font-medium">Scholar Number</label>
+                <input type="text" id="scholarNo" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-4ecdc4 bg-white/80">
+            </div>
+            <div id="votingPosts" class="space-y-4">
+                <!-- Voting posts will be dynamically inserted here -->
+            </div>
+            <div class="flex justify-between">
+                <button id="prevBtn" type="button" class="vote-btn w-1/3 py-2 text-white font-semibold rounded-md text-lg mt-4 hidden">Previous</button>
+                <button id="nextBtn" type="button" class="vote-btn w-1/3 py-2 text-white font-semibold rounded-md text-lg mt-4">Next</button>
+                <button id="submitBtn" type="submit" class="vote-btn w-1/3 py-2 text-white font-semibold rounded-md text-lg mt-4 hidden">Submit Vote</button>
+            </div>
+        </form>
+        <a href="admin-control.html" class="block text-center mt-4 text-4ecdc4 hover:text-45b7d1 hover:underline text-lg font-medium">View Election Results</a>
+    </section>
+    <footer class="mt-12 text-center text-white/80 text-lg">© 2025 Sanmati Higher Secondary School. All rights reserved.</footer>
 
     <script type="module">
-        // Import Firebase SDK
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-        import { getFirestore, collection, doc, getDoc, getDocs, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        import { initializeApp, deleteApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, query, where, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // Firebase Configuration (Replace with your Firebase project config)
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+         const firebaseConfig = {
+  apiKey: "AIzaSyBLN3ENTtU1clKiY3ayKym4p2hFCsSw1ts",
+  authDomain: "school-voting-492f0.firebaseapp.com",
+  projectId: "school-voting-492f0",
+  storageBucket: "school-voting-492f0.firebasestorage.app",
+  messagingSenderId: "1067824236088",
+  appId: "1:1067824236088:web:867393ecd32b0708bec8cd",
+  measurementId: "G-F8J7CRVNPE"
+};
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+        let app;
+        if (getApps().length) {
+            getApps().forEach(a => deleteApp(a));
+        }
+        app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // DOM Elements
-        const votingSection = document.getElementById('voting-section');
-        const candidatesList = document.getElementById('candidates-list');
-        const submitVoteBtn = document.getElementById('submit-vote');
-        const voteMessage = document.getElementById('vote-message');
-        const resultsLink = document.getElementById('results-link');
-        const studentName = document.getElementById('student-name');
-        const studentClass = document.getElementById('student-class');
-        const studentSection = document.getElementById('student-section');
-        const scholarNumber = document.getElementById('scholar-number');
-
-        // Sample Candidates (Fallback if Firestore is empty)
-        const candidates = [
-            { id: '1', name: 'John Doe', position: 'President' },
-            { id: '2', name: 'Jane Smith', position: 'President' },
-            { id: '3', name: 'Alex Johnson', position: 'Vice President' },
-            { id: '4', name: 'Emily Brown', position: 'Vice President' }
+        const posts = [
+            { id: "post1", label: "School President", tooltip: "Leads the student council and represents the school." },
+            { id: "post2", label: "Vice President", tooltip: "Assists the president and leads in their absence." },
+            { id: "post3", label: "Prime Minister", tooltip: "Oversees major school initiatives." },
+            { id: "post4", label: "Deputy P.M.", tooltip: "Supports the Prime Minister." },
+            { id: "post5", label: "Discipline Advisor", tooltip: "Promotes discipline and school rules." },
+            { id: "post6", label: "Speaker", tooltip: "Represents student voices in assemblies." },
+            { id: "post7", label: "House Captain Class 10 (1 per House)", tooltip: "Leads Class 10 house activities.", classSpecific: "9-10" },
+            { id: "post8", label: "Vice-Captain Class 9 (1 per House)", tooltip: "Supports Class 9 house leadership.", classSpecific: "9-10" },
+            { id: "post9", label: "Sports Captain Class 9 (1 per House)", tooltip: "Leads Class 9 sports activities.", classSpecific: "9-10" },
+            { id: "post10", label: "Class Representative Class 10 (4 Positions)", tooltip: "Represents Class 10 students.", classSpecific: "9-10" },
+            { id: "post11", label: "Cultural Advisor", tooltip: "Promotes cultural events." },
+            { id: "post12", label: "Cultural Minister", tooltip: "Organizes cultural programs." },
+            { id: "post13", label: "Technological Advisor", tooltip: "Guides tech-related initiatives." },
+            { id: "post14", label: "Technological Minister", tooltip: "Implements tech solutions." },
+            { id: "post15", label: "Academic Minister", tooltip: "Focuses on academic excellence." },
+            { id: "post16", label: "Chairmen of House", tooltip: "Oversees house activities." },
+            { id: "post17", label: "Environment Minister", tooltip: "Promotes environmental initiatives." }
         ];
 
-        // Load Candidates
-        async function loadCandidates() {
-            candidatesList.innerHTML = '';
-            try {
-                const candidateSnapshot = await getDocs(collection(db, 'candidates'));
-                if (candidateSnapshot.empty) {
-                    candidates.forEach(candidate => {
-                        const div = document.createElement('div');
-                        div.className = 'flex items-center p-2 border rounded card';
-                        div.innerHTML = `
-                            <input type="radio" name="candidate-${candidate.position}" value="${candidate.id}" class="mr-2">
-                            <span>${candidate.name} - ${candidate.position}</span>
-                        `;
-                        candidatesList.appendChild(div);
-                    });
-                } else {
-                    candidateSnapshot.forEach(doc => {
-                        const candidate = { id: doc.id, ...doc.data() };
-                        const div = document.createElement('div');
-                        div.className = 'flex items-center p-2 border rounded card';
-                        div.innerHTML = `
-                            <input type="radio" name="candidate-${candidate.position}" value="${candidate.id}" class="mr-2">
-                            <span>${candidate.name} - ${candidate.position}</span>
-                        `;
-                        candidatesList.appendChild(div);
-                    });
-                }
-            } catch (error) {
-                voteMessage.textContent = 'Error loading candidates: ' + error.message;
-            }
+        const candidates = [
+            { name: "Candidate 6", image: "images/candidate6.jpg" },
+            { name: "Candidate 7", image: "images/candidate7.jpg" },
+            { name: "Candidate 8", image: "images/candidate8.jpg" },
+near the dropdown when a candidate is selected
+            { name: "Candidate 9", image: "images/candidate9.jpg" },
+            { name: "Candidate 10", image: "images/candidate10.jpg" }
+        ];
+
+        let currentStep = 0;
+        const votingPostsDiv = document.getElementById('votingPosts');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progress-bar');
+
+        function updatePosts() {
+            const classValue = document.getElementById('class').value;
+            const sectionDiv = document.getElementById('sectionDiv');
+            votingPostsDiv.innerHTML = '';
+            currentStep = 0;
+
+            sectionDiv.style.display = classValue ? 'block' : 'none';
+            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
+            if (filteredPosts.length === 0) return;
+
+            renderPost(filteredPosts[0]);
+            updateProgress(filteredPosts);
+            prevBtn.classList.add('hidden');
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
         }
 
-        // Check if scholar number has voted
-        async function checkIfVoted(scholar) {
-            try {
-                const voteQuery = await getDocs(collection(db, 'votes'));
-                let hasVoted = false;
-                voteQuery.forEach(doc => {
-                    if (doc.data().scholarNumber === scholar) {
-                        hasVoted = true;
+        function renderPost(post) {
+            votingPostsDiv.innerHTML = `
+                <div class="mb-4">
+                    <label for="${post.id}" class="block text-gray-200 font-medium">${post.label} <span class="tooltip" title="${post.tooltip}">ℹ️</span></label>
+                    <div class="flex items-center space-x-4">
+                        <select id="${post.id}" class="custom-select" required>
+                            <option value="" disabled selected>--Choose a Candidate--</option>
+                            ${candidates.map(c => `<option value="${c.name}" data-image="${c.image}">${c.name}</option>`).join('')}
+                        </select>
+                        <img class="candidate-img-preview hidden w-12 h-12 rounded-full border-2 border-white" src="" alt="Candidate">
+                    </div>
+                </div>
+            `;
+            updateCandidateOptions();
+            const select = document.getElementById(post.id);
+            select.addEventListener('change', () => {
+                const imgUrl = select.options[select.selectedIndex].getAttribute('data-image');
+                const img = select.parentElement.querySelector('.candidate-img-preview');
+                if (imgUrl && select.value) {
+                    img.src = imgUrl;
+                    img.classList.remove('hidden');
+                } else {
+                    img.classList.add('hidden');
+                }
+                updateCandidateOptions();
+            });
+        }
+
+        function updateCandidateOptions() {
+            const selects = document.querySelectorAll('.custom-select');
+            const selectedValues = new Set();
+            selects.forEach(select => {
+                if (select.value && select.value !== '') {
+                    selectedValues.add(select.value);
+                }
+            });
+            selects.forEach(select => {
+                Array.from(select.options).forEach(option => {
+                    if (selectedValues.has(option.value) && option.value !== '' && select.value !== option.value) {
+                        option.disabled = true;
+                    } else {
+                        option.disabled = false;
                     }
                 });
-                if (hasVoted) {
-                    voteMessage.textContent = 'This scholar number has already voted!';
-                    submitVoteBtn.disabled = true;
-                } else {
-                    submitVoteBtn.disabled = false;
-                }
-            } catch (error) {
-                voteMessage.textContent = 'Error checking vote status: ' + error.message;
-            }
-        }
-
-        // Check Results Link Visibility (Admin-Only)
-        async function checkResultsVisibility() {
-            try {
-                const configDoc = await getDoc(doc(db, 'config', 'election'));
-                if (configDoc.exists() && configDoc.data().showResults === true) {
-                    resultsLink.classList.remove('hidden');
-                } else {
-                    resultsLink.classList.add('hidden');
-                }
-            } catch (error) {
-                console.error('Error checking results visibility:', error);
-                resultsLink.classList.add('hidden'); // Hide link on error
-            }
-        }
-
-        // Initialize
-        loadCandidates();
-        checkResultsVisibility();
-
-        // Submit Vote
-        submitVoteBtn.addEventListener('click', async () => {
-            const name = studentName.value.trim();
-            const classGrade = studentClass.value;
-            const section = studentSection.value;
-            const scholar = scholarNumber.value.trim();
-
-            if (!name || !classGrade || !section || !scholar) {
-                voteMessage.textContent = 'Please fill in all student details!';
-                return;
-            }
-
-            // Check if scholar number has already voted
-            await checkIfVoted(scholar);
-            if (submitVoteBtn.disabled) return;
-
-            const selectedCandidates = {};
-            document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
-                selectedCandidates[input.name] = input.value;
             });
+        }
 
-            if (Object.keys(selectedCandidates).length === 0) {
-                voteMessage.textContent = 'Please select at least one candidate!';
-                return;
-            }
+        function updateProgress(filteredPosts) {
+            const progress = ((currentStep + 1) / filteredPosts.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
 
-            try {
-                const classSection = `${classGrade}_${section}`;
-                await setDoc(doc(db, 'votes', scholar), {
-                    studentName: name,
-                    class: classGrade,
-                    section: section,
-                    classSection: classSection,
-                    scholarNumber: scholar,
-                    votes: selectedCandidates,
-                    timestamp: new Date()
-                });
-                voteMessage.textContent = 'Vote submitted successfully!';
-                submitVoteBtn.disabled = true;
-            } catch (error) {
-                voteMessage.textContent = 'Error submitting vote: ' + error.message;
+        prevBtn.addEventListener('click', () => {
+            const classValue = document.getElementById('class').value;
+            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
+            currentStep--;
+            renderPost(filteredPosts[currentStep]);
+            updateProgress(filteredPosts);
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+            if (currentStep === 0) {
+                prevBtn.classList.add('hidden');
             }
         });
+
+        nextBtn.addEventListener('click', () => {
+            const classValue = document.getElementById('class').value;
+            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
+            const currentPost = filteredPosts[currentStep];
+            const select = document.getElementById(currentPost.id);
+            if (!select.value) {
+                alert('Please select a candidate for this position.');
+                return;
+            }
+            currentStep++;
+            if (currentStep < filteredPosts.length) {
+                renderPost(filteredPosts[currentStep]);
+                updateProgress(filteredPosts);
+                prevBtn.classList.remove('hidden');
+            } else {
+                showSummary(filteredPosts);
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                prevBtn.classList.remove('hidden');
+            }
+        });
+
+        function showSummary(filteredPosts) {
+            votingPostsDiv.innerHTML = `
+                <div class="modal-content">
+                    <h3 class="text-2xl font-bold mb-4">Review Your Votes</h3>
+                    ${filteredPosts.map(post => {
+                        const select = document.getElementById(post.id);
+                        return select ? `<p><strong>${post.label}:</strong> ${select.value || 'Not selected'}</p>` : '';
+                    }).join('')}
+                    <div class="mt-4 flex justify-end space-x-2">
+                        <button type="button" class="vote-btn py-2 px-4 text-white font-semibold rounded-md" onclick="goBack()">Edit</button>
+                        <button type="button" class="vote-btn py-2 px-4 text-white font-semibold rounded-md" onclick="submitForm()">Confirm</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.goBack = function() {
+            const classValue = document.getElementById('class').value;
+            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classValue);
+            currentStep--;
+            renderPost(filteredPosts[currentStep]);
+            updateProgress(filteredPosts);
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+            if (currentStep === 0) {
+                prevBtn.classList.add('hidden');
+            }
+        };
+
+        window.submitForm = function() {
+            document.getElementById('voteForm').dispatchEvent(new Event('submit'));
+        };
+
+        async function validateScholarNo() {
+            const scholarNo = document.getElementById('scholarNo').value;
+            const classVal = document.getElementById('class').value;
+            const section = document.getElementById('section').value || 'N/A';
+            const classSection = `${classVal}${section !== 'N/A' ? section : ''}`;
+            try {
+                const scholarDoc = await getDoc(doc(db, `classes/${classSection}/students`, scholarNo));
+                return scholarDoc.exists();
+            } catch (error) {
+                console.error('Validation error:', error);
+                return false;
+            }
+        }
+
+        document.getElementById('voteForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const classVal = document.getElementById('class').value;
+            const section = document.getElementById('section').value || 'N/A';
+            const scholarNo = document.getElementById('scholarNo').value;
+
+            if (!name || !classVal || !scholarNo) {
+                alert('Please fill in all required fields: Name, Class, and Scholar Number.');
+                return;
+            }
+
+            if (!(await validateScholarNo())) {
+                alert('Invalid scholar number!');
+                return;
+            }
+
+            const filteredPosts = posts.filter(post => !post.classSpecific || post.classSpecific === classVal);
+            const postsData = {};
+            let allSelected = true;
+
+            filteredPosts.forEach(post => {
+                const select = document.getElementById(post.id);
+                if (select && select.value) {
+                    postsData[post.id.replace('post', '')] = select.value;
+                } else {
+                    allSelected = false;
+                }
+            });
+
+            if (!allSelected) {
+                alert('Please select a candidate for all positions.');
+                return;
+            }
+
+            const classSection = `${classVal}${section !== 'N/A' ? section : ''}`;
+            try {
+                const voteQuery = query(collection(db, `classes/${classSection}/votes`), where('scholarNo', '==', scholarNo));
+                const voteSnapshot = await getDocs(voteQuery);
+                if (!voteSnapshot.empty) {
+                    alert('You have already voted!');
+                    return;
+                }
+
+                const voteRef = doc(db, `classes/${classSection}/votes`, scholarNo);
+                await setDoc(voteRef, {
+                    name,
+                    section,
+                    scholarNo,
+                    posts: postsData,
+                    timestamp: new Date()
+                }, { merge: true });
+                alert(`Thank you, ${name}! Your votes have been recorded.`);
+                document.getElementById('voteForm').reset();
+                updatePosts();
+            } catch (error) {
+                console.error('Vote submission error:', error);
+                alert('Error submitting vote: ' + error.message);
+            }
+        });
+
+        document.getElementById('class').addEventListener('change', updatePosts);
+        document.getElementById('section').addEventListener('change', updatePosts);
+        updatePosts();
     </script>
 </body>
 </html>
